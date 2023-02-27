@@ -70,6 +70,8 @@ jobs:
   semver:
     name: 'Set code version tag'
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
     needs:
       - linters
     defaults:
@@ -91,6 +93,9 @@ jobs:
           fetch-depth: 0
       -
         name: Set application version
-        uses: kvendingoldo/semver-action@v1.10
+        id: set_version
+        uses: kvendingoldo/semver-action@v1.12
         with:
-          primary_branch: main
+          enable_github_releases: true
+          release_tag_prefix: "v"
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
