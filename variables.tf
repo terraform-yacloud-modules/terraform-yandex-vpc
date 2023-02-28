@@ -57,7 +57,8 @@ variable "create_nat" {
 #
 # dhcp
 #
-variable "dchp" {
+variable "dhcp" {
+  description = "DCHP options"
   type = object({
     domain_name         = string
     domain_name_servers = list(string)

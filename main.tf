@@ -22,7 +22,7 @@ resource "yandex_vpc_subnet" "private" {
   route_table_id = yandex_vpc_route_table.private[0].id
 
   dynamic "dhcp_options" {
-    for_each = var.dchp != null ? [var.dchp] : []
+    for_each = var.dhcp != null ? [var.dhcp] : []
     content {
       domain_name         = dhcp_options.value["domain_name"]
       domain_name_servers = dhcp_options.value["domain_name_servers"]
@@ -46,7 +46,7 @@ resource "yandex_vpc_subnet" "public" {
   route_table_id = yandex_vpc_route_table.public[0].id
 
   dynamic "dhcp_options" {
-    for_each = var.dchp != null ? [var.dchp] : []
+    for_each = var.dhcp != null ? [var.dhcp] : []
     content {
       domain_name         = dhcp_options.value["domain_name"]
       domain_name_servers = dhcp_options.value["domain_name_servers"]

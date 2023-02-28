@@ -3,6 +3,11 @@ output "vpc_id" {
   value       = yandex_vpc_network.main[0].id
 }
 
+output "vpc_name" {
+  description = "VPC Name"
+  value       = yandex_vpc_network.main[0].name
+}
+
 output "public_subnets" {
   description = "Public subnets info"
   value       = yandex_vpc_subnet.public

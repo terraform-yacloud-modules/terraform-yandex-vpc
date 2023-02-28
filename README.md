@@ -46,7 +46,7 @@ No modules.
 | <a name="input_blank_name"></a> [blank\_name](#input\_blank\_name) | Blank name which will be used for all resources | `string` | n/a | yes |
 | <a name="input_create_nat"></a> [create\_nat](#input\_create\_nat) | Controls if a nat gateway should be created | `bool` | `true` | no |
 | <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Controls if VPC should be created (it affects almost all resources) | `bool` | `true` | no |
-| <a name="input_dchp"></a> [dchp](#input\_dchp) | dhcp | <pre>object({<br>    domain_name         = string<br>    domain_name_servers = list(string)<br>    ntp_servers         = list(string)<br>  })</pre> | `null` | no |
+| <a name="input_dhcp"></a> [dhcp](#input\_dhcp) | DCHP options | <pre>object({<br>    domain_name         = string<br>    domain_name_servers = list(string)<br>    ntp_servers         = list(string)<br>  })</pre> | `null` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels | `map(string)` | `{}` | no |
 | <a name="input_private_routes"></a> [private\_routes](#input\_private\_routes) | Map of routes for private subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
@@ -66,6 +66,7 @@ No modules.
 | <a name="output_public_rt"></a> [public\_rt](#output\_public\_rt) | Public route table info |
 | <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Public subnets info |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPC ID |
+| <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | VPC Name |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## License
