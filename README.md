@@ -37,6 +37,7 @@ No modules.
 | [yandex_vpc_route_table.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_subnet.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
 | [yandex_vpc_subnet.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
+| [yandex_vpc_network.main](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/vpc_network) | data source |
 
 ## Inputs
 
@@ -45,7 +46,9 @@ No modules.
 | <a name="input_azs"></a> [azs](#input\_azs) | A list of availability zones names or ids in the region | `list(string)` | `[]` | no |
 | <a name="input_blank_name"></a> [blank\_name](#input\_blank\_name) | Blank name which will be used for all resources | `string` | n/a | yes |
 | <a name="input_create_nat"></a> [create\_nat](#input\_create\_nat) | Controls if a nat gateway should be created | `bool` | `true` | no |
-| <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Controls if VPC should be created (it affects almost all resources) | `bool` | `true` | no |
+| <a name="input_create_route_tables"></a> [create\_route\_tables](#input\_create\_route\_tables) | Controls if route tables should be created | `bool` | `true` | no |
+| <a name="input_create_subnets"></a> [create\_subnets](#input\_create\_subnets) | Controls if subnets should be created | `bool` | `true` | no |
+| <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Controls if VPC should be created | `bool` | `true` | no |
 | <a name="input_dhcp"></a> [dhcp](#input\_dhcp) | DCHP options | <pre>object({<br>    domain_name         = string<br>    domain_name_servers = list(string)<br>    ntp_servers         = list(string)<br>  })</pre> | `null` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels | `map(string)` | `{}` | no |
@@ -55,6 +58,7 @@ No modules.
 | <a name="input_public_routes"></a> [public\_routes](#input\_public\_routes) | Map of routes for public subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_public_subnet_suffix"></a> [public\_subnet\_suffix](#input\_public\_subnet\_suffix) | Suffix to append to public subnets name | `string` | `"pub"` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Map of public subnets | `list(list(string))` | `[]` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | If create\_vpc set to false you may provide vpc\_id to use existing VPC | `string` | `""` | no |
 
 ## Outputs
 
