@@ -43,7 +43,19 @@ variable "private_subnet_suffix" {
 # feature flags
 #
 variable "create_vpc" {
-  description = "Controls if VPC should be created (it affects almost all resources)"
+  description = "Controls if VPC should be created"
+  type        = bool
+  default     = true
+}
+
+variable "create_subnets" {
+  description = "Controls if subnets should be created"
+  type        = bool
+  default     = true
+}
+
+variable "create_route_tables" {
+  description = "Controls if route tables should be created"
   type        = bool
   default     = true
 }
@@ -52,6 +64,15 @@ variable "create_nat" {
   description = "Controls if a nat gateway should be created"
   type        = bool
   default     = true
+}
+
+#
+# vpc
+#
+variable "vpc_id" {
+  description = "If create_vpc set to false you may provide vpc_id to use existing VPC"
+  type        = string
+  default     = ""
 }
 
 #

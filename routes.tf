@@ -10,14 +10,14 @@ locals {
 }
 
 resource "yandex_vpc_route_table" "public" {
-  count = var.create_vpc ? 1 : 0
+  count = var.create_route_tables ? 1 : 0
 
   name        = format("%s-pub", var.blank_name)
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
-  network_id = yandex_vpc_network.main[0].id
+  network_id = local.vpc_id
 
   dynamic "static_route" {
     for_each = length(local.public_routes) > 0 ? local.public_routes : []
@@ -32,14 +32,14 @@ resource "yandex_vpc_route_table" "public" {
 }
 
 resource "yandex_vpc_route_table" "private" {
-  count = var.create_vpc ? 1 : 0
+  count = var.create_route_tables ? 1 : 0
 
   name        = format("%s-prv", var.blank_name)
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
-  network_id = yandex_vpc_network.main[0].id
+  network_id = local.vpc_id
 
   dynamic "static_route" {
     for_each = length(local.private_routes) > 0 ? local.private_routes : []

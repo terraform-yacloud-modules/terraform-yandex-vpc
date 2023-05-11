@@ -1,5 +1,5 @@
 resource "yandex_vpc_gateway" "nat" {
-  count = var.create_vpc && var.create_nat ? 1 : 0
+  count = var.create_nat ? 1 : 0
 
   name        = format("%s-nat", var.blank_name)
   description = ""
