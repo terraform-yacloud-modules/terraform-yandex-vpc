@@ -8,7 +8,7 @@ module "network" {
   labels = {
     testlabel = "testvalue"
   }
-  folder_id  = "b1gts6lhpg0oskqf7v32"
+  folder_id  = "xxxx"
 
   azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
 
