@@ -19,7 +19,7 @@ resource "yandex_vpc_subnet" "private" {
 
   network_id     = local.vpc_id
   v4_cidr_blocks = var.private_subnets[count.index]
-  route_table_id = yandex_vpc_route_table.private[0].id
+  route_table_id = var.create_route_tables ? yandex_vpc_route_table.private[0].id : null
 
   dynamic "dhcp_options" {
     for_each = var.dhcp != null ? [var.dhcp] : []
@@ -43,7 +43,7 @@ resource "yandex_vpc_subnet" "public" {
 
   network_id     = local.vpc_id
   v4_cidr_blocks = var.public_subnets[count.index]
-  route_table_id = yandex_vpc_route_table.public[0].id
+  route_table_id = var.create_route_tables ? yandex_vpc_route_table.public[0].id : null
 
   dynamic "dhcp_options" {
     for_each = var.dhcp != null ? [var.dhcp] : []
