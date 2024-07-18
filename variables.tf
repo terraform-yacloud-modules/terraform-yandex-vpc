@@ -80,7 +80,7 @@ variable "vpc_id" {
 #
 variable "dhcp" {
   description = "DCHP options"
-  type        = object({
+  type = object({
     domain_name         = string
     domain_name_servers = list(string)
     ntp_servers         = list(string)
@@ -108,7 +108,7 @@ variable "public_subnets" {
 #
 variable "private_routes" {
   description = "Map of routes for private subnets"
-  type        = list(object({
+  type = list(object({
     enabled            = bool,
     destination_prefix = string,
     next_hop_address   = string,
@@ -118,7 +118,7 @@ variable "private_routes" {
 
 variable "public_routes" {
   description = "Map of routes for public subnets"
-  type        = list(object({
+  type = list(object({
     enabled            = bool,
     destination_prefix = string,
     next_hop_address   = string,
