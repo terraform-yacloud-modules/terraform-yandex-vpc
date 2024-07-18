@@ -2,6 +2,16 @@
 
 Terraform module which creates Yandex Cloud VPC resources.
 
+## "private" versus "intra" subnets
+
+By default, if NAT Gateways are enabled, private subnets will be configured with routes for Internet traffic that point at the NAT Gateways configured by use of the above options.
+
+If you need private subnets that should have no Internet routing (in the sense of [RFC1918 Category 1 subnets](https://tools.ietf.org/html/rfc1918)), `intra_subnets` should be specified.
+
+### Single NAT Gateway
+
+If `single_nat_gateway = true`, then all private subnets will route their Internet traffic through this single NAT gateway. The NAT gateway will be placed in the first public subnet in your `public_subnets` block.
+
 ## Examples
 
 Examples codified under
@@ -25,16 +35,24 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v0.24.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [yandex_compute_image.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_image) | resource |
+| [yandex_vpc_address.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_address) | resource |
 | [yandex_vpc_gateway.nat](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_gateway) | resource |
 | [yandex_vpc_network.main](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_network) | resource |
+| [yandex_vpc_route_table.intra](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_route_table.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_route_table.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
+| [yandex_vpc_security_group.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_security_group) | resource |
+| [yandex_vpc_security_group_rule.nat_instance_ssh](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_security_group_rule) | resource |
+| [yandex_vpc_subnet.intra](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
 | [yandex_vpc_subnet.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
 | [yandex_vpc_subnet.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
 | [yandex_vpc_network.main](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/vpc_network) | data source |
@@ -45,30 +63,51 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_azs"></a> [azs](#input\_azs) | A list of availability zones names or ids in the region | `list(string)` | `[]` | no |
 | <a name="input_blank_name"></a> [blank\_name](#input\_blank\_name) | Blank name which will be used for all resources | `string` | n/a | yes |
-| <a name="input_create_nat"></a> [create\_nat](#input\_create\_nat) | Controls if a nat gateway should be created | `bool` | `true` | no |
-| <a name="input_create_route_tables"></a> [create\_route\_tables](#input\_create\_route\_tables) | Controls if route tables should be created | `bool` | `true` | no |
+| <a name="input_create_intra_route_table"></a> [create\_intra\_route\_table](#input\_create\_intra\_route\_table) | Controls if route tables should be created for intra subnets | `bool` | `true` | no |
+| <a name="input_create_nat_gateway"></a> [create\_nat\_gateway](#input\_create\_nat\_gateway) | If true, NAT Gateway will be created | `bool` | `false` | no |
+| <a name="input_create_nat_instance"></a> [create\_nat\_instance](#input\_create\_nat\_instance) | If true, NAT Instance will be created | `bool` | `false` | no |
+| <a name="input_create_private_route_table"></a> [create\_private\_route\_table](#input\_create\_private\_route\_table) | Controls if route tables should be created for private subnets | `bool` | `true` | no |
+| <a name="input_create_public_route_table"></a> [create\_public\_route\_table](#input\_create\_public\_route\_table) | Controls if route tables should be created for public subnets | `bool` | `true` | no |
 | <a name="input_create_subnets"></a> [create\_subnets](#input\_create\_subnets) | Controls if subnets should be created | `bool` | `true` | no |
 | <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Controls if VPC should be created | `bool` | `true` | no |
-| <a name="input_dhcp"></a> [dhcp](#input\_dhcp) | DCHP options | <pre>object({<br>    domain_name         = string<br>    domain_name_servers = list(string)<br>    ntp_servers         = list(string)<br>  })</pre> | `null` | no |
+| <a name="input_dhcp"></a> [dhcp](#input\_dhcp) | DHCP options | <pre>object({<br>    domain_name         = string<br>    domain_name_servers = list(string)<br>    ntp_servers         = list(string)<br>  })</pre> | `null` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
+| <a name="input_intra_routes"></a> [intra\_routes](#input\_intra\_routes) | Map of routes for intra subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
+| <a name="input_intra_subnet_suffix"></a> [intra\_subnet\_suffix](#input\_intra\_subnet\_suffix) | Suffix to append to intra subnets name | `string` | `"intra"` | no |
+| <a name="input_intra_subnets"></a> [intra\_subnets](#input\_intra\_subnets) | Map of intra subnets | `list(list(string))` | `[]` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels | `map(string)` | `{}` | no |
+| <a name="input_nat_instance_allow_ssh"></a> [nat\_instance\_allow\_ssh](#input\_nat\_instance\_allow\_ssh) | If true, ssh access will be enabled at NAT Instances | `bool` | `false` | no |
+| <a name="input_nat_instance_family"></a> [nat\_instance\_family](#input\_nat\_instance\_family) | VM family for NAT Instance. By default, it's Yandex official NAT Instance family: https://yandex.cloud/ru/marketplace/products/yc/nat-instance-ubuntu-22-04-lts | `string` | `"nat-instance-ubuntu-2204"` | no |
+| <a name="input_nat_instance_vm"></a> [nat\_instance\_vm](#input\_nat\_instance\_vm) | A set of default VM options for NAT Instances' VMs | <pre>object({<br>    platform_id               = string<br>    cores                     = number<br>    memory                    = number<br>    core_fraction             = number<br>    boot_disk_size            = number<br>    preemptible               = bool<br>    allow_stopping_for_update = bool<br>    generate_ssh_key          = bool<br>    ssh_user                  = string<br>    ssh_pubkey                = string<br>    enable_oslogin            = bool<br>  })</pre> | <pre>{<br>  "allow_stopping_for_update": false,<br>  "boot_disk_size": 20,<br>  "core_fraction": 100,<br>  "cores": 2,<br>  "enable_oslogin": true,<br>  "generate_ssh_key": false,<br>  "memory": 4,<br>  "platform_id": "standard-v3",<br>  "preemptible": false,<br>  "ssh_pubkey": null,<br>  "ssh_user": "ubuntu"<br>}</pre> | no |
 | <a name="input_private_routes"></a> [private\_routes](#input\_private\_routes) | Map of routes for private subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_private_subnet_suffix"></a> [private\_subnet\_suffix](#input\_private\_subnet\_suffix) | Suffix to append to private subnets name | `string` | `"prv"` | no |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | Map of private subnets | `list(list(string))` | `[]` | no |
 | <a name="input_public_routes"></a> [public\_routes](#input\_public\_routes) | Map of routes for public subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_public_subnet_suffix"></a> [public\_subnet\_suffix](#input\_public\_subnet\_suffix) | Suffix to append to public subnets name | `string` | `"pub"` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Map of public subnets | `list(list(string))` | `[]` | no |
+| <a name="input_single_nat_gateway"></a> [single\_nat\_gateway](#input\_single\_nat\_gateway) | Should be true if you want to provision a single shared NAT Gateway across all of your private networks | `bool` | `false` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | If create\_vpc set to false you may provide vpc\_id to use existing VPC | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_intra_rt"></a> [intra\_rt](#output\_intra\_rt) | Intra route table info |
+| <a name="output_intra_subnets"></a> [intra\_subnets](#output\_intra\_subnets) | Raw information about intra subnets |
+| <a name="output_intra_subnets_cidr_blocks"></a> [intra\_subnets\_cidr\_blocks](#output\_intra\_subnets\_cidr\_blocks) | List of intra subnets cidr\_blocks |
+| <a name="output_intra_subnets_ids"></a> [intra\_subnets\_ids](#output\_intra\_subnets\_ids) | List of intra subnets IDs |
+| <a name="output_intra_subnets_ipv6_cidr_blocks"></a> [intra\_subnets\_ipv6\_cidr\_blocks](#output\_intra\_subnets\_ipv6\_cidr\_blocks) | List of intra subnets IPv6 cidr\_blocks |
 | <a name="output_nat_id"></a> [nat\_id](#output\_nat\_id) | NAT Gateway ID |
 | <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route table info |
-| <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Private subnets info |
+| <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Raw information about private subnets |
+| <a name="output_private_subnets_cidr_blocks"></a> [private\_subnets\_cidr\_blocks](#output\_private\_subnets\_cidr\_blocks) | List of private subnets cidr\_blocks |
+| <a name="output_private_subnets_ids"></a> [private\_subnets\_ids](#output\_private\_subnets\_ids) | List of private subnets IDs |
+| <a name="output_private_subnets_ipv6_cidr_blocks"></a> [private\_subnets\_ipv6\_cidr\_blocks](#output\_private\_subnets\_ipv6\_cidr\_blocks) | List of private subnets IPv6 cidr\_blocks |
 | <a name="output_public_rt"></a> [public\_rt](#output\_public\_rt) | Public route table info |
-| <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Public subnets info |
+| <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Raw information about public subnets |
+| <a name="output_public_subnets_cidr_blocks"></a> [public\_subnets\_cidr\_blocks](#output\_public\_subnets\_cidr\_blocks) | List of public subnets cidr\_blocks |
+| <a name="output_public_subnets_ids"></a> [public\_subnets\_ids](#output\_public\_subnets\_ids) | List of public subnets IDs |
+| <a name="output_public_subnets_ipv6_cidr_blocks"></a> [public\_subnets\_ipv6\_cidr\_blocks](#output\_public\_subnets\_ipv6\_cidr\_blocks) | List of public subnets IPv6 cidr\_blocks |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPC ID |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | VPC Name |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

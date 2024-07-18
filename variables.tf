@@ -1,6 +1,6 @@
-#
+################################################################################
 # yandex cloud
-#
+################################################################################
 variable "folder_id" {
   description = "Folder ID"
   type        = string
@@ -13,9 +13,9 @@ variable "azs" {
   default     = []
 }
 
-#
-# naming
-#
+################################################################################
+# Naming
+################################################################################
 variable "blank_name" {
   description = "Blank name which will be used for all resources"
   type        = string
@@ -27,10 +27,10 @@ variable "labels" {
   default     = {}
 }
 
-variable "public_subnet_suffix" {
-  description = "Suffix to append to public subnets name"
+variable "intra_subnet_suffix" {
+  description = "Suffix to append to intra subnets name"
   type        = string
-  default     = "pub"
+  default     = "intra"
 }
 
 variable "private_subnet_suffix" {
@@ -39,9 +39,15 @@ variable "private_subnet_suffix" {
   default     = "prv"
 }
 
-#
+variable "public_subnet_suffix" {
+  description = "Suffix to append to public subnets name"
+  type        = string
+  default     = "pub"
+}
+
+################################################################################
 # feature flags
-#
+################################################################################
 variable "create_vpc" {
   description = "Controls if VPC should be created"
   type        = bool
@@ -54,32 +60,20 @@ variable "create_subnets" {
   default     = true
 }
 
-variable "create_route_tables" {
-  description = "Controls if route tables should be created"
-  type        = bool
-  default     = true
-}
-
-variable "create_nat" {
-  description = "Controls if a nat gateway should be created"
-  type        = bool
-  default     = true
-}
-
-#
-# vpc
-#
+################################################################################
+# VPC
+################################################################################
 variable "vpc_id" {
   description = "If create_vpc set to false you may provide vpc_id to use existing VPC"
   type        = string
   default     = ""
 }
 
-#
-# dhcp
-#
+################################################################################
+# DHCP
+################################################################################
 variable "dhcp" {
-  description = "DCHP options"
+  description = "DHCP options"
   type = object({
     domain_name         = string
     domain_name_servers = list(string)
@@ -88,9 +82,15 @@ variable "dhcp" {
   default = null
 }
 
-#
-# subnets
-#
+################################################################################
+# Subnets
+################################################################################
+variable "intra_subnets" {
+  description = "Map of intra subnets"
+  type        = list(list(string))
+  default     = []
+}
+
 variable "private_subnets" {
   description = "Map of private subnets"
   type        = list(list(string))
@@ -103,9 +103,31 @@ variable "public_subnets" {
   default     = []
 }
 
-#
-# routes
-#
+################################################################################
+# Routes
+################################################################################
+variable "create_intra_route_table" {
+  description = "Controls if route tables should be created for intra subnets"
+  type        = bool
+  default     = true
+}
+
+variable "intra_routes" {
+  description = "Map of routes for intra subnets"
+  type = list(object({
+    enabled            = bool,
+    destination_prefix = string,
+    next_hop_address   = string,
+  }))
+  default = []
+}
+
+variable "create_private_route_table" {
+  description = "Controls if route tables should be created for private subnets"
+  type        = bool
+  default     = true
+}
+
 variable "private_routes" {
   description = "Map of routes for private subnets"
   type = list(object({
@@ -116,6 +138,12 @@ variable "private_routes" {
   default = []
 }
 
+variable "create_public_route_table" {
+  description = "Controls if route tables should be created for public subnets"
+  type        = bool
+  default     = true
+}
+
 variable "public_routes" {
   description = "Map of routes for public subnets"
   type = list(object({
@@ -124,4 +152,69 @@ variable "public_routes" {
     next_hop_address   = string,
   }))
   default = []
+}
+
+
+################################################################################
+# NAT Gateway
+################################################################################
+
+variable "create_nat_gateway" {
+  description = "If true, NAT Gateway will be created"
+  type        = bool
+  default     = false
+}
+
+variable "create_nat_instance" {
+  description = "If true, NAT Instance will be created"
+  type        = bool
+  default     = false
+}
+
+variable "nat_instance_allow_ssh" {
+  description = "If true, ssh access will be enabled at NAT Instances"
+  type        = bool
+  default     = false
+}
+
+variable "single_nat_gateway" {
+  description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
+  type        = bool
+  default     = false
+}
+
+variable "nat_instance_family" {
+  description = "VM family for NAT Instance. By default, it's Yandex official NAT Instance family: https://yandex.cloud/ru/marketplace/products/yc/nat-instance-ubuntu-22-04-lts"
+  type        = string
+  default     = "nat-instance-ubuntu-2204"
+}
+
+variable "nat_instance_vm" {
+  description = "A set of default VM options for NAT Instances' VMs"
+  type = object({
+    platform_id               = string
+    cores                     = number
+    memory                    = number
+    core_fraction             = number
+    boot_disk_size            = number
+    preemptible               = bool
+    allow_stopping_for_update = bool
+    generate_ssh_key          = bool
+    ssh_user                  = string
+    ssh_pubkey                = string
+    enable_oslogin            = bool
+  })
+  default = {
+    platform_id               = "standard-v3"
+    cores                     = 2
+    memory                    = 4
+    core_fraction             = 100
+    boot_disk_size            = 20
+    preemptible               = false
+    allow_stopping_for_update = false
+    generate_ssh_key          = false
+    ssh_user                  = "ubuntu"
+    ssh_pubkey                = null
+    enable_oslogin            = true
+  }
 }
