@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  tf_version: 1.3.9
+  tf_version: 1.5.7
   tflint_version: v0.45.0
 
 concurrency:
