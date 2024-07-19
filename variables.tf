@@ -177,8 +177,8 @@ variable "nat_instance_allow_ssh" {
   default     = false
 }
 
-variable "single_nat_gateway" {
-  description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
+variable "single_nat_instance" {
+  description = "Should be true if you want to provision a single shared NAT Instance across all of your private networks"
   type        = bool
   default     = false
 }

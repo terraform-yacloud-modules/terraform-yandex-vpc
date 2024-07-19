@@ -24,7 +24,7 @@ module "network" {
 
   create_vpc             = true
   create_nat_instance    = true
-  single_nat_gateway     = false
+  single_nat_instance    = false
   nat_instance_allow_ssh = true
   nat_instance_vm = {
     platform_id               = "standard-v3"

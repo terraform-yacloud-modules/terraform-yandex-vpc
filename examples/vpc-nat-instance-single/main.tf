@@ -23,5 +23,5 @@ module "network" {
 
   create_vpc          = true
   create_nat_instance = true
-  single_nat_gateway  = true
+  single_nat_instance = true
 }

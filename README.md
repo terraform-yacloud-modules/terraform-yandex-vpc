@@ -18,9 +18,9 @@ This Terraform module provides the following types of networks:
 </details>
 
 
-### Single NAT Gateway
+### Single NAT Instance
 
-If `single_nat_gateway = true`, then all private subnets will route their Internet traffic through this single NAT gateway. The NAT gateway will be placed in the first public subnet in your `public_subnets` block.
+If `single_nat_instance = true`, then all private subnets will route their Internet traffic through this single NAT gateway. The NAT gateway will be placed in the first public subnet in your `public_subnets` block.
 
 ## Examples
 
