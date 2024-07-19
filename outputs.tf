@@ -37,8 +37,8 @@ output "intra_subnets_ipv6_cidr_blocks" {
 }
 
 output "intra_rt" {
-  description = "Intra route table info"
-  value       = var.create_intra_route_table ? yandex_vpc_route_table.intra[0] : null
+  description = "Intra route tables info"
+  value       = var.create_intra_route_table ? (length(var.intra_subnets) > 0 ? yandex_vpc_route_table.intra : null) : null
 }
 
 #
@@ -65,8 +65,8 @@ output "private_subnets_ipv6_cidr_blocks" {
 }
 
 output "private_rt" {
-  description = "Private route table info"
-  value       = var.create_private_route_table ? yandex_vpc_route_table.private[0] : null
+  description = "Private route tables info"
+  value       = var.create_private_route_table ? (length(var.private_routes) > 0 ? yandex_vpc_route_table.private : null) : null
 }
 
 #
@@ -93,6 +93,6 @@ output "public_subnets_ipv6_cidr_blocks" {
 }
 
 output "public_rt" {
-  description = "Public route table info"
-  value       = var.create_public_route_table ? yandex_vpc_route_table.public[0] : null
+  description = "Public route tables info"
+  value       = var.create_public_route_table ? (length(var.public_subnets) > 0 ? yandex_vpc_route_table.public : null) : null
 }
