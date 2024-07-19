@@ -95,25 +95,25 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="input_public_routes"></a> [public\_routes](#input\_public\_routes) | Map of routes for public subnets | <pre>list(object({<br>    enabled            = bool,<br>    destination_prefix = string,<br>    next_hop_address   = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_public_subnet_suffix"></a> [public\_subnet\_suffix](#input\_public\_subnet\_suffix) | Suffix to append to public subnets name | `string` | `"pub"` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Map of public subnets | `list(list(string))` | `[]` | no |
-| <a name="input_single_nat_gateway"></a> [single\_nat\_gateway](#input\_single\_nat\_gateway) | Should be true if you want to provision a single shared NAT Gateway across all of your private networks | `bool` | `false` | no |
+| <a name="input_single_nat_instance"></a> [single\_nat\_instance](#input\_single\_nat\_instance) | Should be true if you want to provision a single shared NAT Instance across all of your private networks | `bool` | `false` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | If create\_vpc set to false you may provide vpc\_id to use existing VPC | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_intra_rt"></a> [intra\_rt](#output\_intra\_rt) | Intra route table info |
+| <a name="output_intra_rt"></a> [intra\_rt](#output\_intra\_rt) | Intra route tables info |
 | <a name="output_intra_subnets"></a> [intra\_subnets](#output\_intra\_subnets) | Raw information about intra subnets |
 | <a name="output_intra_subnets_cidr_blocks"></a> [intra\_subnets\_cidr\_blocks](#output\_intra\_subnets\_cidr\_blocks) | List of intra subnets cidr\_blocks |
 | <a name="output_intra_subnets_ids"></a> [intra\_subnets\_ids](#output\_intra\_subnets\_ids) | List of intra subnets IDs |
 | <a name="output_intra_subnets_ipv6_cidr_blocks"></a> [intra\_subnets\_ipv6\_cidr\_blocks](#output\_intra\_subnets\_ipv6\_cidr\_blocks) | List of intra subnets IPv6 cidr\_blocks |
 | <a name="output_nat_id"></a> [nat\_id](#output\_nat\_id) | NAT Gateway ID |
-| <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route table info |
+| <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route tables info |
 | <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Raw information about private subnets |
 | <a name="output_private_subnets_cidr_blocks"></a> [private\_subnets\_cidr\_blocks](#output\_private\_subnets\_cidr\_blocks) | List of private subnets cidr\_blocks |
 | <a name="output_private_subnets_ids"></a> [private\_subnets\_ids](#output\_private\_subnets\_ids) | List of private subnets IDs |
 | <a name="output_private_subnets_ipv6_cidr_blocks"></a> [private\_subnets\_ipv6\_cidr\_blocks](#output\_private\_subnets\_ipv6\_cidr\_blocks) | List of private subnets IPv6 cidr\_blocks |
-| <a name="output_public_rt"></a> [public\_rt](#output\_public\_rt) | Public route table info |
+| <a name="output_public_rt"></a> [public\_rt](#output\_public\_rt) | Public route tables info |
 | <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Raw information about public subnets |
 | <a name="output_public_subnets_cidr_blocks"></a> [public\_subnets\_cidr\_blocks](#output\_public\_subnets\_cidr\_blocks) | List of public subnets cidr\_blocks |
 | <a name="output_public_subnets_ids"></a> [public\_subnets\_ids](#output\_public\_subnets\_ids) | List of public subnets IDs |

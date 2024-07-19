@@ -1,6 +1,8 @@
 resource "yandex_compute_image" "nat_instance" {
   count = local.create_nat_instance ? 1 : 0
 
+  folder_id = var.folder_id
+
   source_family = var.nat_instance_family
 }
 
@@ -9,6 +11,8 @@ resource "yandex_vpc_security_group" "nat_instance" {
 
   name       = local.nat_blank_name
   network_id = yandex_vpc_network.main[0].id
+
+  folder_id = var.folder_id
 
   egress {
     protocol       = "ANY"
