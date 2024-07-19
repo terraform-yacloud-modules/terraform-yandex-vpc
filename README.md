@@ -2,11 +2,21 @@
 
 Terraform module which creates Yandex Cloud VPC resources.
 
-## "private" versus "intra" subnets
+## VPC Layout
+This Terraform module provides the following types of networks:
+* **intra**: If you need private subnets that should have no Internet routing (in the sense of [RFC1918 Category 1 subnets](https://tools.ietf.org/html/rfc1918)), `intra_subnets` should be specified. These networks does not have any routes to NAT. It also recommended to configure security group to restrict public inbound/outbound access at these networks.
+* **private**: These networks have a route to NAT Gateway (NAT Instance). It means, that instances with private IPs will have access to the Internet via the NAT Gateway (NAT Instance). It also recommended to configure security group to restrict public inbound access at these networks.
+* **public**: These networks do not have a route to NAT Gateway (NAT Instance). It means, that the access to/from the VM will be available only in case of attached public IP.
 
-By default, if NAT Gateways are enabled, private subnets will be configured with routes for Internet traffic that point at the NAT Gateways configured by use of the above options.
 
-If you need private subnets that should have no Internet routing (in the sense of [RFC1918 Category 1 subnets](https://tools.ietf.org/html/rfc1918)), `intra_subnets` should be specified.
+<details><summary><b>VPC layout with NAT Gateway</b></summary><br>
+<img src="assets/vpc_nat_gateway.png" alt="vpc_nat_gateway">
+</details>
+
+<details><summary><b>VPC layout with NAT Instance</b></summary><br>
+<img src="assets/vpc_nat_instance.png" alt="vpc_nat_instance">
+</details>
+
 
 ### Single NAT Gateway
 
