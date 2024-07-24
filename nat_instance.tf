@@ -10,7 +10,7 @@ resource "yandex_vpc_security_group" "nat_instance" {
   count = local.create_nat_instance ? 1 : 0
 
   name       = local.nat_blank_name
-  network_id = yandex_vpc_network.main[0].id
+  network_id = local.vpc_id
 
   folder_id = var.folder_id
 

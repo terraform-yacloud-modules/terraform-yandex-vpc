@@ -1,6 +1,3 @@
 data "yandex_vpc_network" "main" {
-  count = var.create_vpc ? 0 : 1
-
-  network_id = var.vpc_id != "" ? var.vpc_id : null
-  name       = var.vpc_id == "" ? var.blank_name : null
+  network_id = var.create_vpc ? yandex_vpc_network.main[0].id : var.vpc_id
 }
