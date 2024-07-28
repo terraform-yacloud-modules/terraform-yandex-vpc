@@ -1,11 +1,3 @@
-locals {
-  name = "vpc-nat-instance-single"
-
-  labels = {
-    repo = "terraform-yacloud-modules/terraform-yandex-vpc"
-  }
-}
-
 data "yandex_client_config" "client" {}
 
 module "network" {
@@ -13,8 +5,10 @@ module "network" {
 
   folder_id = data.yandex_client_config.client.folder_id
 
-  blank_name = local.name
-  labels     = local.labels
+  blank_name = "vpc-nat-instance-single"
+  labels = {
+    repo = "terraform-yacloud-modules/terraform-yandex-vpc"
+  }
 
   azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
 
