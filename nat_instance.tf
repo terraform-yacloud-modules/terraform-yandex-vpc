@@ -19,20 +19,19 @@ resource "yandex_vpc_security_group" "nat_instance" {
     description    = "any"
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
+}
 
-  ingress {
-    protocol       = "TCP"
-    description    = "ext-http"
-    v4_cidr_blocks = ["0.0.0.0/0"]
-    port           = 80
-  }
+resource "yandex_vpc_security_group_rule" "nat_instance" {
+  count = local.create_nat_instance ? length(var.private_subnets) : 0
 
-  ingress {
-    protocol       = "TCP"
-    description    = "ext-https"
-    v4_cidr_blocks = ["0.0.0.0/0"]
-    port           = 443
-  }
+  security_group_binding = yandex_vpc_security_group.nat_instance[0].id
+
+  direction      = "ingress"
+  description    = "nat instance"
+  v4_cidr_blocks = yandex_vpc_subnet.private[count.index].v4_cidr_blocks
+  from_port      = 0
+  to_port        = 65535
+  protocol       = "ANY"
 }
 
 resource "yandex_vpc_security_group_rule" "nat_instance_ssh" {
