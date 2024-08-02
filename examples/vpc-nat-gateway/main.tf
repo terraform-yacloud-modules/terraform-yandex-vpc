@@ -12,8 +12,8 @@ module "network" {
 
   azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
 
-  public_subnets  = [["10.1.0.0/24"], ["10.2.0.0/24"], ["10.3.0.0/24"]]
-  private_subnets = [["10.4.0.0/24"], ["10.5.0.0/24"], ["10.6.0.0/24"]]
+  public_subnets  = [["10.61.0.0/24"], ["10.62.0.0/24"], ["10.63.0.0/24"]]
+  private_subnets = [["10.64.0.0/24"], ["10.65.0.0/24"], ["10.66.0.0/24"]]
 
   create_vpc         = true
   create_nat_gateway = true

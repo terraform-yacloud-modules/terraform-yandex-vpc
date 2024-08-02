@@ -12,9 +12,9 @@ module "network" {
 
   azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
 
-  public_subnets  = [["10.1.0.0/24"], ["10.2.0.0/24"], ["10.3.0.0/24"]]
-  private_subnets = [["10.4.0.0/24"], ["10.5.0.0/24"], ["10.6.0.0/24"]]
-  intra_subnets   = [["10.7.0.0/24"], ["10.8.0.0/24"], ["10.9.0.0/24"]]
+  public_subnets  = [["10.51.0.0/24"], ["10.52.0.0/24"], ["10.53.0.0/24"]]
+  private_subnets = [["10.54.0.0/24"], ["10.55.0.0/24"], ["10.56.0.0/24"]]
+  intra_subnets   = [["10.57.0.0/24"], ["10.58.0.0/24"], ["10.59.0.0/24"]]
 
   create_vpc             = true
   create_nat_instance    = true
