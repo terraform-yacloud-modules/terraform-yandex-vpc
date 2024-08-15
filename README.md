@@ -36,12 +36,13 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
+| <a name="requirement_yandex"></a> [yandex](#requirement\_yandex) | >= 0.72.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_yandex"></a> [yandex](#provider\_yandex) | n/a |
+| <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.72.0 |
 
 ## Modules
 
@@ -61,6 +62,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | [yandex_vpc_route_table.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_route_table.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_security_group.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_security_group) | resource |
+| [yandex_vpc_security_group_rule.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_security_group_rule) | resource |
 | [yandex_vpc_security_group_rule.nat_instance_ssh](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_security_group_rule) | resource |
 | [yandex_vpc_subnet.intra](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
 | [yandex_vpc_subnet.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
@@ -107,7 +109,10 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="output_intra_subnets_cidr_blocks"></a> [intra\_subnets\_cidr\_blocks](#output\_intra\_subnets\_cidr\_blocks) | List of intra subnets cidr\_blocks |
 | <a name="output_intra_subnets_ids"></a> [intra\_subnets\_ids](#output\_intra\_subnets\_ids) | List of intra subnets IDs |
 | <a name="output_intra_subnets_ipv6_cidr_blocks"></a> [intra\_subnets\_ipv6\_cidr\_blocks](#output\_intra\_subnets\_ipv6\_cidr\_blocks) | List of intra subnets IPv6 cidr\_blocks |
+| <a name="output_nat_gw_id"></a> [nat\_gw\_id](#output\_nat\_gw\_id) | NAT |
 | <a name="output_nat_id"></a> [nat\_id](#output\_nat\_id) | NAT Gateway ID |
+| <a name="output_nat_instance_ip"></a> [nat\_instance\_ip](#output\_nat\_instance\_ip) | n/a |
+| <a name="output_nat_instance_sg_id"></a> [nat\_instance\_sg\_id](#output\_nat\_instance\_sg\_id) | n/a |
 | <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route tables info |
 | <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Raw information about private subnets |
 | <a name="output_private_subnets_cidr_blocks"></a> [private\_subnets\_cidr\_blocks](#output\_private\_subnets\_cidr\_blocks) | List of private subnets cidr\_blocks |
