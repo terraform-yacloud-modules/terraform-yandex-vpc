@@ -68,7 +68,7 @@ resource "yandex_vpc_address" "nat_instance" {
 module "nat_instance" {
   count = local.len_nat_instances
 
-  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v0.24.0"
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v1.0.0"
 
   folder_id = var.folder_id
 
