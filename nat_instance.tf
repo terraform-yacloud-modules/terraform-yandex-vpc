@@ -1,5 +1,5 @@
 resource "yandex_compute_image" "nat_instance" {
-  count = local.create_nat_instance ? 1 : 0
+  count = local.create_nat_instance && var.nat_instance_image_id == "" ? 1 : 0
 
   folder_id = var.folder_id
 
@@ -90,7 +90,7 @@ module "nat_instance" {
   core_fraction = var.nat_instance_vm["core_fraction"]
   preemptible   = var.nat_instance_vm["preemptible"]
 
-  image_id = yandex_compute_image.nat_instance[0].id
+  image_id = var.nat_instance_image_id != "" ? var.nat_instance_image_id : yandex_compute_image.nat_instance[0].id
 
   hostname                  = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
   allow_stopping_for_update = var.nat_instance_vm["allow_stopping_for_update"]

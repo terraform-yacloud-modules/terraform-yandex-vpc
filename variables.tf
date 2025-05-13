@@ -183,6 +183,12 @@ variable "single_nat_instance" {
   default     = false
 }
 
+variable "nat_instance_image_id" {
+  description = "The image_id to be used for the NAT instance. If left empty, a default image_id from `nat_instance_family` will be used."
+  type        = string
+  default     = ""
+}
+
 variable "nat_instance_family" {
   description = "VM family for NAT Instance. By default, it's Yandex official NAT Instance family: https://yandex.cloud/ru/marketplace/products/yc/nat-instance-ubuntu-22-04-lts"
   type        = string
