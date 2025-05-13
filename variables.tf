@@ -138,6 +138,23 @@ variable "private_routes" {
   default = []
 }
 
+variable "private_routes_gateway" {
+  description = <<EOL
+Defines how private subnets connect to the internet.
+
+Supported values:
+- none         : No internet route will be added.
+- nat_instance : Use a NAT instance for internet access (a route will be created if `create_nat_instance` is enabled).
+- nat_gateway  : Use a NAT Gateway for internet access (a route will be created if `create_nat_gateway` is enabled).
+EOL
+  type        = string
+  default     = "none"
+  validation {
+    condition     = contains(["none", "nat_instance", "nat_gateway"], var.private_routes_gateway)
+    error_message = "private_routes_gateway must be one of: 'none', 'nat_instance', or 'nat_gateway'."
+  }
+}
+
 variable "create_public_route_table" {
   description = "Controls if route tables should be created for public subnets"
   type        = bool

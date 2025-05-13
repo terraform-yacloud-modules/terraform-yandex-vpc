@@ -31,7 +31,7 @@ resource "yandex_vpc_route_table" "private" {
   network_id = local.vpc_id
 
   dynamic "static_route" {
-    for_each = var.create_nat_instance ? [1] : []
+    for_each = var.private_routes_gateway == "nat_instance" && var.create_nat_instance ? [1] : []
 
     content {
       destination_prefix = "0.0.0.0/0"
@@ -40,7 +40,7 @@ resource "yandex_vpc_route_table" "private" {
   }
 
   dynamic "static_route" {
-    for_each = var.create_nat_gateway ? [1] : []
+    for_each = var.private_routes_gateway == "nat_gateway" && var.create_nat_gateway ? [1] : []
 
     content {
       destination_prefix = "0.0.0.0/0"

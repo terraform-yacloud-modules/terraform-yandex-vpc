@@ -1,5 +1,5 @@
 resource "yandex_compute_image" "nat_instance" {
-  count = local.create_nat_instance && var.nat_instance_image_id == "" ? 1 : 0
+  count = var.create_nat_instance && var.nat_instance_image_id == "" ? 1 : 0
 
   folder_id = var.folder_id
 
@@ -7,7 +7,7 @@ resource "yandex_compute_image" "nat_instance" {
 }
 
 resource "yandex_vpc_security_group" "nat_instance" {
-  count = local.create_nat_instance ? 1 : 0
+  count = var.create_nat_instance ? 1 : 0
 
   name       = local.nat_blank_name
   network_id = local.vpc_id
@@ -22,7 +22,7 @@ resource "yandex_vpc_security_group" "nat_instance" {
 }
 
 resource "yandex_vpc_security_group_rule" "nat_instance" {
-  count = local.create_nat_instance ? length(var.private_subnets) : 0
+  count = var.create_nat_instance ? length(var.private_subnets) : 0
 
   security_group_binding = yandex_vpc_security_group.nat_instance[0].id
 
@@ -35,7 +35,7 @@ resource "yandex_vpc_security_group_rule" "nat_instance" {
 }
 
 resource "yandex_vpc_security_group_rule" "nat_instance_ssh" {
-  count = local.create_nat_instance && var.nat_instance_allow_ssh ? 1 : 0
+  count = var.create_nat_instance && var.nat_instance_allow_ssh ? 1 : 0
 
   security_group_binding = yandex_vpc_security_group.nat_instance[0].id
   direction              = "ingress"

@@ -17,15 +17,15 @@ output "nat_id" {
 # NAT
 #
 output "nat_gw_id" {
-  value = (var.create_nat_gateway && var.create_nat_instance == false) ? yandex_vpc_gateway.nat[0].id : null
+  value = var.create_nat_gateway ? yandex_vpc_gateway.nat[0].id : null
 }
 
 output "nat_instance_sg_id" {
-  value = local.create_nat_instance ? yandex_vpc_security_group.nat_instance[0].id : null
+  value = var.create_nat_instance ? yandex_vpc_security_group.nat_instance[0].id : null
 }
 
 output "nat_instance_ip" {
-  value = local.create_nat_instance ? yandex_vpc_address.nat_instance[*].external_ipv4_address : null
+  value = var.create_nat_instance ? yandex_vpc_address.nat_instance[*].external_ipv4_address : null
 }
 
 #
