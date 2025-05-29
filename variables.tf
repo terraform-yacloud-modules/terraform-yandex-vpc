@@ -241,3 +241,23 @@ variable "nat_instance_vm" {
     enable_oslogin            = true
   }
 }
+
+################################################################################
+# Private Endpoint for S3
+################################################################################
+
+variable "private_endpoint" {
+  description = "Configuration for creating a private endpoint for Yandex Object Storage. When enabled, creates a secure connection to Object Storage without going through the public internet. Supports two ways of address configuration: 1) using subnet_id and optional address, or 2) using an existing address_id."
+  type = object({
+    enable                      = optional(bool, false)
+    name                        = optional(string, null)
+    description                 = optional(string, "S3 private endpoint")
+    private_dns_records_enabled = optional(bool, true)
+    subnet_v4_cidr_block        = optional(string, null) # For address configuration option 1
+    address                     = optional(string, null) # For address configuration option 1
+    address_id                  = optional(string, null) # For address configuration option 2
+    labels                      = optional(map(string), {})
+    }
+  )
+  default = {}
+}

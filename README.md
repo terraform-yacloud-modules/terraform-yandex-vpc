@@ -48,7 +48,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v1.0.0 |
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.0.0 |
 
 ## Resources
 
@@ -58,6 +58,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | [yandex_vpc_address.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_address) | resource |
 | [yandex_vpc_gateway.nat](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_gateway) | resource |
 | [yandex_vpc_network.main](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_network) | resource |
+| [yandex_vpc_private_endpoint.private_endpoint](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_private_endpoint) | resource |
 | [yandex_vpc_route_table.intra](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_route_table.private](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
 | [yandex_vpc_route_table.public](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_route_table) | resource |
@@ -92,6 +93,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="input_nat_instance_family"></a> [nat\_instance\_family](#input\_nat\_instance\_family) | VM family for NAT Instance. By default, it's Yandex official NAT Instance family: https://yandex.cloud/ru/marketplace/products/yc/nat-instance-ubuntu-22-04-lts | `string` | `"nat-instance-ubuntu-2204"` | no |
 | <a name="input_nat_instance_image_id"></a> [nat\_instance\_image\_id](#input\_nat\_instance\_image\_id) | The image\_id to be used for the NAT instance. If left empty, a default image\_id from `nat_instance_family` will be used. | `string` | `""` | no |
 | <a name="input_nat_instance_vm"></a> [nat\_instance\_vm](#input\_nat\_instance\_vm) | A set of default VM options for NAT Instances' VMs | <pre>object({<br/>    platform_id               = string<br/>    cores                     = number<br/>    memory                    = number<br/>    core_fraction             = number<br/>    boot_disk_size            = number<br/>    preemptible               = bool<br/>    allow_stopping_for_update = bool<br/>    generate_ssh_key          = bool<br/>    ssh_user                  = string<br/>    ssh_pubkey                = string<br/>    enable_oslogin            = bool<br/>  })</pre> | <pre>{<br/>  "allow_stopping_for_update": false,<br/>  "boot_disk_size": 20,<br/>  "core_fraction": 100,<br/>  "cores": 2,<br/>  "enable_oslogin": true,<br/>  "generate_ssh_key": false,<br/>  "memory": 4,<br/>  "platform_id": "standard-v3",<br/>  "preemptible": false,<br/>  "ssh_pubkey": null,<br/>  "ssh_user": "ubuntu"<br/>}</pre> | no |
+| <a name="input_private_endpoint"></a> [private\_endpoint](#input\_private\_endpoint) | Configuration for creating a private endpoint for Yandex Object Storage. When enabled, creates a secure connection to Object Storage without going through the public internet. Supports two ways of address configuration: 1) using subnet\_id and optional address, or 2) using an existing address\_id. | <pre>object({<br/>    enable                      = optional(bool, false)<br/>    name                        = optional(string, null)<br/>    description                 = optional(string, "S3 private endpoint")<br/>    private_dns_records_enabled = optional(bool, true)<br/>    subnet_v4_cidr_block        = optional(string, null) # For address configuration option 1<br/>    address                     = optional(string, null) # For address configuration option 1<br/>    address_id                  = optional(string, null) # For address configuration option 2<br/>    labels                      = optional(map(string), {})<br/>    }<br/>  )</pre> | `{}` | no |
 | <a name="input_private_routes"></a> [private\_routes](#input\_private\_routes) | Map of routes for private subnets | <pre>list(object({<br/>    enabled            = bool,<br/>    destination_prefix = string,<br/>    next_hop_address   = string,<br/>  }))</pre> | `[]` | no |
 | <a name="input_private_routes_gateway"></a> [private\_routes\_gateway](#input\_private\_routes\_gateway) | Defines how private subnets connect to the internet.<br/><br/>Supported values:<br/>- none         : No internet route will be added.<br/>- nat\_instance : Use a NAT instance for internet access (a route will be created if `create_nat_instance` is enabled).<br/>- nat\_gateway  : Use a NAT Gateway for internet access (a route will be created if `create_nat_gateway` is enabled). | `string` | `"none"` | no |
 | <a name="input_private_subnet_suffix"></a> [private\_subnet\_suffix](#input\_private\_subnet\_suffix) | Suffix to append to private subnets name | `string` | `"prv"` | no |
@@ -111,10 +113,10 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="output_intra_subnets_cidr_blocks"></a> [intra\_subnets\_cidr\_blocks](#output\_intra\_subnets\_cidr\_blocks) | List of intra subnets cidr\_blocks |
 | <a name="output_intra_subnets_ids"></a> [intra\_subnets\_ids](#output\_intra\_subnets\_ids) | List of intra subnets IDs |
 | <a name="output_intra_subnets_ipv6_cidr_blocks"></a> [intra\_subnets\_ipv6\_cidr\_blocks](#output\_intra\_subnets\_ipv6\_cidr\_blocks) | List of intra subnets IPv6 cidr\_blocks |
-| <a name="output_nat_gw_id"></a> [nat\_gw\_id](#output\_nat\_gw\_id) | NAT |
+| <a name="output_nat_gw_id"></a> [nat\_gw\_id](#output\_nat\_gw\_id) | NAT Gateway ID for external connectivity |
 | <a name="output_nat_id"></a> [nat\_id](#output\_nat\_id) | NAT Gateway ID |
-| <a name="output_nat_instance_ip"></a> [nat\_instance\_ip](#output\_nat\_instance\_ip) | n/a |
-| <a name="output_nat_instance_sg_id"></a> [nat\_instance\_sg\_id](#output\_nat\_instance\_sg\_id) | n/a |
+| <a name="output_nat_instance_ip"></a> [nat\_instance\_ip](#output\_nat\_instance\_ip) | External IP address of NAT instance(s) |
+| <a name="output_nat_instance_sg_id"></a> [nat\_instance\_sg\_id](#output\_nat\_instance\_sg\_id) | Security group ID for NAT instance |
 | <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route tables info |
 | <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Raw information about private subnets |
 | <a name="output_private_subnets_cidr_blocks"></a> [private\_subnets\_cidr\_blocks](#output\_private\_subnets\_cidr\_blocks) | List of private subnets cidr\_blocks |
