@@ -2,7 +2,7 @@
 # Creates a secure connection to Object Storage without going through the public internet
 # This is useful for security-sensitive applications or to reduce data transfer costs
 resource "yandex_vpc_private_endpoint" "private_endpoint" {
-  count = var.private_endpoint.enable == true ? 1 : 0
+  count = var.private_endpoint.enabled == true ? 1 : 0
 
   name        = var.private_endpoint.name == null ? "${var.blank_name}-private-endpoint" : var.private_endpoint.name
   description = var.private_endpoint.description
