@@ -17,15 +17,18 @@ output "nat_id" {
 # NAT
 #
 output "nat_gw_id" {
-  value = module.network.nat_gw_id
+  description = "NAT Gateway ID for external connectivity"
+  value       = module.network.nat_gw_id
 }
 
 output "nat_instance_sg_id" {
-  value = module.network.nat_instance_sg_id
+  description = "Security group ID for NAT instance"
+  value       = module.network.nat_instance_sg_id
 }
 
 output "nat_instance_ip" {
-  value = module.network.nat_instance_ip
+  description = "External IP address of NAT instance(s)"
+  value       = module.network.nat_instance_ip
 }
 
 #
