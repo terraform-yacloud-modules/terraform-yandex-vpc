@@ -21,6 +21,12 @@ variable "blank_name" {
   type        = string
 }
 
+variable "description" {
+  description = "Description for VPC"
+  type        = string
+  default     = ""
+}
+
 variable "labels" {
   description = "A set of labels"
   type        = map(string)

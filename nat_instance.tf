@@ -22,13 +22,13 @@ resource "yandex_vpc_security_group" "nat_instance" {
 }
 
 resource "yandex_vpc_security_group_rule" "nat_instance" {
-  count = var.create_nat_instance ? length(var.private_subnets) : 0
+  count = var.create_nat_instance && var.create_subnets && length(var.private_subnets) > 0 ? length(var.private_subnets) : 0
 
   security_group_binding = yandex_vpc_security_group.nat_instance[0].id
 
   direction      = "ingress"
   description    = "nat instance"
-  v4_cidr_blocks = yandex_vpc_subnet.private[count.index].v4_cidr_blocks
+  v4_cidr_blocks = var.create_subnets ? yandex_vpc_subnet.private[count.index].v4_cidr_blocks : var.private_subnets[count.index]
   from_port      = 0
   to_port        = 65535
   protocol       = "ANY"
@@ -61,7 +61,7 @@ resource "yandex_vpc_address" "nat_instance" {
   deletion_protection = false
 
   external_ipv4_address {
-    zone_id = yandex_vpc_subnet.public[count.index]["zone"]
+    zone_id = var.create_subnets ? yandex_vpc_subnet.public[count.index]["zone"] : var.azs[count.index]
   }
 }
 
@@ -72,12 +72,12 @@ module "nat_instance" {
 
   folder_id = var.folder_id
 
-  name        = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
-  description = format("NAT Instance in %s zone", yandex_vpc_subnet.public[count.index]["zone"])
+  name        = format("%s-%s", local.nat_blank_name, var.create_subnets ? yandex_vpc_subnet.public[count.index]["zone"] : element(var.azs, count.index))
+  description = format("NAT Instance in %s zone", var.create_subnets ? yandex_vpc_subnet.public[count.index]["zone"] : element(var.azs, count.index))
   labels      = var.labels
 
-  zone       = yandex_vpc_subnet.public[count.index]["zone"]
-  subnet_id  = yandex_vpc_subnet.public[count.index]["id"]
+  zone       = var.create_subnets ? yandex_vpc_subnet.public[count.index]["zone"] : var.azs[count.index]
+  subnet_id  = var.create_subnets ? yandex_vpc_subnet.public[count.index]["id"] : null
   enable_nat = true
 
   create_pip                = false
@@ -92,7 +92,7 @@ module "nat_instance" {
 
   image_id = var.nat_instance_image_id != "" ? var.nat_instance_image_id : yandex_compute_image.nat_instance[0].id
 
-  hostname                  = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
+  hostname                  = format("%s-%s", local.nat_blank_name, var.create_subnets ? yandex_vpc_subnet.public[count.index]["zone"] : element(var.azs, count.index))
   allow_stopping_for_update = var.nat_instance_vm["allow_stopping_for_update"]
   generate_ssh_key          = var.nat_instance_vm["generate_ssh_key"]
   ssh_user                  = var.nat_instance_vm["ssh_user"]

@@ -3,19 +3,23 @@ resource "yandex_vpc_network" "main" {
 
   name        = var.blank_name
   folder_id   = var.folder_id
-  description = ""
+  description = var.description
   labels      = var.labels
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 resource "yandex_vpc_subnet" "intra" {
   count = var.create_subnets && length(var.intra_subnets) > 0 ? length(var.intra_subnets) : 0
 
-  name        = format("%s-%s-%s", var.blank_name, var.intra_subnet_suffix, element(var.azs, count.index))
+  name        = format("%s-%s-%s", var.blank_name, var.intra_subnet_suffix, var.azs[count.index])
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
-  zone = element(var.azs, count.index)
+  zone = var.azs[count.index]
 
   network_id     = local.vpc_id
   v4_cidr_blocks = var.intra_subnets[count.index]
@@ -29,17 +33,21 @@ resource "yandex_vpc_subnet" "intra" {
       ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
     }
   }
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 resource "yandex_vpc_subnet" "private" {
   count = var.create_subnets && length(var.private_subnets) > 0 ? length(var.private_subnets) : 0
 
-  name        = format("%s-%s-%s", var.blank_name, var.private_subnet_suffix, element(var.azs, count.index))
+  name        = format("%s-%s-%s", var.blank_name, var.private_subnet_suffix, var.azs[count.index])
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
-  zone = element(var.azs, count.index)
+  zone = var.azs[count.index]
 
   network_id     = local.vpc_id
   v4_cidr_blocks = var.private_subnets[count.index]
@@ -53,17 +61,21 @@ resource "yandex_vpc_subnet" "private" {
       ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
     }
   }
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 resource "yandex_vpc_subnet" "public" {
   count = var.create_subnets && length(var.public_subnets) > 0 ? length(var.public_subnets) : 0
 
-  name        = format("%s-%s-%s", var.blank_name, var.public_subnet_suffix, element(var.azs, count.index))
+  name        = format("%s-%s-%s", var.blank_name, var.public_subnet_suffix, var.azs[count.index])
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
-  zone = element(var.azs, count.index)
+  zone = var.azs[count.index]
 
   network_id     = local.vpc_id
   v4_cidr_blocks = var.public_subnets[count.index]
@@ -76,5 +88,9 @@ resource "yandex_vpc_subnet" "public" {
       domain_name_servers = dhcp_options.value["domain_name_servers"]
       ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
     }
+  }
+
+  lifecycle {
+    ignore_changes = [description]
   }
 }

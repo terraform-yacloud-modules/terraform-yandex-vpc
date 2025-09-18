@@ -1,8 +1,8 @@
 resource "yandex_vpc_route_table" "intra" {
   count = var.create_intra_route_table ? length(var.intra_subnets) : 0
 
-  name        = format("%s-intra-%s", var.blank_name, count.index)
-  description = format("VPC route for intra subnet")
+  name        = format("%s-intra-%s", var.blank_name, var.azs[count.index])
+  description = format("VPC route for intra subnet in %s", var.azs[count.index])
   folder_id   = var.folder_id
   labels      = var.labels
 
@@ -18,13 +18,17 @@ resource "yandex_vpc_route_table" "intra" {
       gateway_id         = lookup(route.value, "gateway_id", null)
     }
   }
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 resource "yandex_vpc_route_table" "private" {
   count = var.create_private_route_table ? length(var.private_subnets) : 0
 
-  name        = format("%s-prv-%s", var.blank_name, count.index)
-  description = format("VPC route for private subnet")
+  name        = format("%s-prv-%s", var.blank_name, var.azs[count.index])
+  description = format("VPC route for private subnet in %s", var.azs[count.index])
   folder_id   = var.folder_id
   labels      = var.labels
 
@@ -58,13 +62,17 @@ resource "yandex_vpc_route_table" "private" {
       gateway_id         = lookup(route.value, "gateway_id", null)
     }
   }
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
 
 resource "yandex_vpc_route_table" "public" {
   count = var.create_public_route_table ? length(var.public_subnets) : 0
 
-  name        = format("%s-pub-%s", var.blank_name, count.index)
-  description = format("VPC route for public subnet")
+  name        = format("%s-pub-%s", var.blank_name, var.azs[count.index])
+  description = format("VPC route for public subnet in %s", var.azs[count.index])
   folder_id   = var.folder_id
   labels      = var.labels
 
@@ -80,5 +88,9 @@ resource "yandex_vpc_route_table" "public" {
       next_hop_address   = lookup(route.value, "next_hop_address", null)
       gateway_id         = lookup(route.value, "gateway_id", null)
     }
+  }
+
+  lifecycle {
+    ignore_changes = [description]
   }
 }

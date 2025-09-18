@@ -48,7 +48,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v1.0.0 |
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.7.0 |
 
 ## Resources
 
@@ -82,6 +82,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="input_create_public_route_table"></a> [create\_public\_route\_table](#input\_create\_public\_route\_table) | Controls if route tables should be created for public subnets | `bool` | `true` | no |
 | <a name="input_create_subnets"></a> [create\_subnets](#input\_create\_subnets) | Controls if subnets should be created | `bool` | `true` | no |
 | <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Controls if VPC should be created | `bool` | `true` | no |
+| <a name="input_description"></a> [description](#input\_description) | Description for VPC | `string` | `""` | no |
 | <a name="input_dhcp"></a> [dhcp](#input\_dhcp) | DHCP options | <pre>object({<br/>    domain_name         = string<br/>    domain_name_servers = list(string)<br/>    ntp_servers         = list(string)<br/>  })</pre> | `null` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
 | <a name="input_intra_routes"></a> [intra\_routes](#input\_intra\_routes) | Map of routes for intra subnets | <pre>list(object({<br/>    enabled            = bool,<br/>    destination_prefix = string,<br/>    next_hop_address   = string,<br/>  }))</pre> | `[]` | no |

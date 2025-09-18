@@ -5,7 +5,7 @@ output "vpc_id" {
 
 output "vpc_name" {
   description = "VPC Name"
-  value       = data.yandex_vpc_network.main.name
+  value       = var.create_vpc ? yandex_vpc_network.main[0].name : data.yandex_vpc_network.main[0].name
 }
 
 output "nat_id" {

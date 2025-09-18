@@ -7,4 +7,8 @@ resource "yandex_vpc_gateway" "nat" {
   labels      = var.labels
 
   shared_egress_gateway {}
+
+  lifecycle {
+    ignore_changes = [description]
+  }
 }
