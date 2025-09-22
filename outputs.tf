@@ -17,15 +17,18 @@ output "nat_id" {
 # NAT
 #
 output "nat_gw_id" {
-  value = var.create_nat_gateway ? yandex_vpc_gateway.nat[0].id : null
+  description = "NAT Gateway ID for external connectivity"
+  value       = var.create_nat_gateway ? yandex_vpc_gateway.nat[0].id : null
 }
 
 output "nat_instance_sg_id" {
-  value = var.create_nat_instance ? yandex_vpc_security_group.nat_instance[0].id : null
+  description = "Security group ID for NAT instance"
+  value       = var.create_nat_instance ? yandex_vpc_security_group.nat_instance[0].id : null
 }
 
 output "nat_instance_ip" {
-  value = var.create_nat_instance ? yandex_vpc_address.nat_instance[*].external_ipv4_address : null
+  description = "External IP address of NAT instance(s)"
+  value       = var.create_nat_instance ? yandex_vpc_address.nat_instance[*].external_ipv4_address : null
 }
 
 #
