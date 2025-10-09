@@ -48,7 +48,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v1.0.0 |
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.10.0 |
 
 ## Resources
 
