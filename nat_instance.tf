@@ -48,11 +48,30 @@ resource "yandex_vpc_security_group_rule" "nat_instance_ssh" {
 resource "yandex_vpc_address" "nat_instance" {
   count = local.len_nat_instances
 
-  name = format("%s-%s", local.nat_blank_name, count.index)
+  name = local.needs_index_per_subnet[count.index] ? format(
+    "%s-%s-%d",
+    local.nat_blank_name,
+    element(var.azs, count.index),
+    local.intra_zone_indices[count.index]
+  ) : format(
+    "%s-%s",
+    local.nat_blank_name,
+    element(var.azs, count.index)
+  )
+  
   labels = merge(
     var.labels,
     {
-      "name" : format("%s-%s", local.nat_blank_name, count.index)
+      "name" : local.needs_index_per_subnet[count.index] ? format(
+        "%s-%s-%d",
+        local.nat_blank_name,
+        element(var.azs, count.index),
+        local.intra_zone_indices[count.index]
+      ) : format(
+        "%s-%s",
+        local.nat_blank_name,
+        element(var.azs, count.index)
+      )
     }
   )
 
@@ -72,7 +91,17 @@ module "nat_instance" {
 
   folder_id = var.folder_id
 
-  name        = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
+  name = local.needs_index_per_subnet[count.index] ? format(
+    "%s-%s-%d",
+    local.nat_blank_name,
+    yandex_vpc_subnet.public[count.index]["zone"],
+    local.intra_zone_indices[count.index]
+  ) : format(
+    "%s-%s",
+    local.nat_blank_name,
+    yandex_vpc_subnet.public[count.index]["zone"]
+  )
+  
   description = format("NAT Instance in %s zone", yandex_vpc_subnet.public[count.index]["zone"])
   labels      = var.labels
 
@@ -92,7 +121,17 @@ module "nat_instance" {
 
   image_id = var.nat_instance_image_id != "" ? var.nat_instance_image_id : yandex_compute_image.nat_instance[0].id
 
-  hostname                  = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
+  hostname = local.needs_index_per_subnet[count.index] ? format(
+    "%s-%s-%d",
+    local.nat_blank_name,
+    yandex_vpc_subnet.public[count.index]["zone"],
+    local.intra_zone_indices[count.index]
+  ) : format(
+    "%s-%s",
+    local.nat_blank_name,
+    yandex_vpc_subnet.public[count.index]["zone"]
+  )
+  
   allow_stopping_for_update = var.nat_instance_vm["allow_stopping_for_update"]
   generate_ssh_key          = var.nat_instance_vm["generate_ssh_key"]
   ssh_user                  = var.nat_instance_vm["ssh_user"]
