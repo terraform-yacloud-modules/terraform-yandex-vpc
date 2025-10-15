@@ -11,7 +11,7 @@ resource "yandex_vpc_route_table" "intra" {
     var.blank_name,
     element(var.azs, count.index)
   )
-  
+
   description = "VPC route for intra subnet"
   folder_id   = var.folder_id
   labels      = var.labels

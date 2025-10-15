@@ -58,7 +58,7 @@ resource "yandex_vpc_address" "nat_instance" {
     local.nat_blank_name,
     element(var.azs, count.index)
   )
-  
+
   labels = merge(
     var.labels,
     {
@@ -101,7 +101,7 @@ module "nat_instance" {
     local.nat_blank_name,
     yandex_vpc_subnet.public[count.index]["zone"]
   )
-  
+
   description = format("NAT Instance in %s zone", yandex_vpc_subnet.public[count.index]["zone"])
   labels      = var.labels
 
