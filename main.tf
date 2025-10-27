@@ -26,7 +26,7 @@ resource "yandex_vpc_subnet" "intra" {
     content {
       domain_name         = dhcp_options.value["domain_name"]
       domain_name_servers = dhcp_options.value["domain_name_servers"]
-      ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
+      ntp_servers         = dhcp_options.value["ntp_servers"]
     }
   }
 }
@@ -50,7 +50,7 @@ resource "yandex_vpc_subnet" "private" {
     content {
       domain_name         = dhcp_options.value["domain_name"]
       domain_name_servers = dhcp_options.value["domain_name_servers"]
-      ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
+      ntp_servers         = dhcp_options.value["ntp_servers"]
     }
   }
 }
@@ -74,7 +74,7 @@ resource "yandex_vpc_subnet" "public" {
     content {
       domain_name         = dhcp_options.value["domain_name"]
       domain_name_servers = dhcp_options.value["domain_name_servers"]
-      ntp_servers         = dhcp_options.value["dhcp_ntp_servers"]
+      ntp_servers         = dhcp_options.value["ntp_servers"]
     }
   }
 }
