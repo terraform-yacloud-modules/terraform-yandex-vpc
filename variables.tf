@@ -63,6 +63,12 @@ variable "create_subnets" {
 ################################################################################
 # VPC
 ################################################################################
+variable "vpc_description" {
+  description = "Description of the VPC network"
+  type        = string
+  default     = ""
+}
+
 variable "vpc_id" {
   description = "If create_vpc set to false you may provide vpc_id to use existing VPC"
   type        = string
