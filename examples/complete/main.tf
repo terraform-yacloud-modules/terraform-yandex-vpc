@@ -17,6 +17,7 @@ module "network" {
   intra_subnets   = [["10.57.0.0/24"], ["10.58.0.0/24"], ["10.59.0.0/24"]]
 
   create_vpc             = true
+  vpc_description        = "Complete VPC example with NAT instance"
   create_subnets         = true
   
   create_intra_route_table = true

@@ -3,7 +3,7 @@ resource "yandex_vpc_network" "main" {
 
   name        = var.blank_name
   folder_id   = var.folder_id
-  description = ""
+  description = var.vpc_description
   labels      = var.labels
 }
 
