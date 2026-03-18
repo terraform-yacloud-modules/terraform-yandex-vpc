@@ -1,3 +1,7 @@
+## v3.6.0 - 2026-03-18
+### Chores
+- 19ffbfb chore(deps): bump nat_instance::terraform-yandex-instance ([#114](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/114))
+
 ## v3.5.0 - 2026-03-14
 ### Chores
 - 539e698 chore(release): version v3.5.0 [skip ci]
