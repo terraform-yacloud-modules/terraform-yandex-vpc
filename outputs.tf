@@ -28,6 +28,18 @@ output "nat_instance_ip" {
   value = var.create_nat_instance ? yandex_vpc_address.nat_instance[*].external_ipv4_address : null
 }
 
+output "nat_instance_ssh_key_pub" {
+  description = "Public SSH keys for NAT instances"
+  sensitive   = true
+  value       = var.create_nat_instance ? (length(module.nat_instance) > 0 ? module.nat_instance[0].ssh_key_pub : null) : null
+}
+
+output "nat_instance_ssh_key_prv" {
+  description = "Private SSH keys for NAT instances"
+  sensitive   = true
+  value       = var.create_nat_instance ? (length(module.nat_instance) > 0 ? module.nat_instance[0].ssh_key_prv : null) : null
+}
+
 #
 # intra subnets
 #

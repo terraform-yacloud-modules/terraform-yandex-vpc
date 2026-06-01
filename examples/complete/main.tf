@@ -16,14 +16,14 @@ module "network" {
   private_subnets = [["10.54.0.0/24"], ["10.55.0.0/24"], ["10.56.0.0/24"]]
   intra_subnets   = [["10.57.0.0/24"], ["10.58.0.0/24"], ["10.59.0.0/24"]]
 
-  create_vpc             = true
-  vpc_description        = "Complete VPC example with NAT instance"
-  create_subnets         = true
-  
-  create_intra_route_table = true
+  create_vpc      = true
+  vpc_description = "Complete VPC example with NAT instance"
+  create_subnets  = true
+
+  create_intra_route_table   = true
   create_private_route_table = true
-  create_public_route_table = true
-  
+  create_public_route_table  = true
+
   create_nat_instance    = true
   create_nat_gateway     = false
   single_nat_instance    = false
@@ -42,19 +42,19 @@ module "network" {
     ssh_pubkey                = null
     enable_oslogin            = true
   }
-  
+
   private_routes_gateway = "nat_instance"
-  
-  intra_routes = []
+
+  intra_routes   = []
   private_routes = []
-  public_routes = []
-  
+  public_routes  = []
+
   dhcp = {
     domain_name         = "example.com"
     domain_name_servers = ["8.8.8.8", "8.8.4.4"]
     ntp_servers         = ["213.239.239.164", "185.209.85.222"]
   }
-  
+
   intra_subnet_suffix   = "intra"
   private_subnet_suffix = "prv"
   public_subnet_suffix  = "pub"

@@ -48,7 +48,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.10.0 |
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.20.0 |
 
 ## Resources
 
@@ -100,6 +100,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="input_public_subnet_suffix"></a> [public\_subnet\_suffix](#input\_public\_subnet\_suffix) | Suffix to append to public subnets name | `string` | `"pub"` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | Map of public subnets | `list(list(string))` | `[]` | no |
 | <a name="input_single_nat_instance"></a> [single\_nat\_instance](#input\_single\_nat\_instance) | Should be true if you want to provision a single shared NAT Instance across all of your private networks | `bool` | `false` | no |
+| <a name="input_vpc_description"></a> [vpc\_description](#input\_vpc\_description) | Description of the VPC network | `string` | `""` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | If create\_vpc set to false you may provide vpc\_id to use existing VPC | `string` | `""` | no |
 
 ## Outputs
@@ -115,6 +116,8 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | <a name="output_nat_id"></a> [nat\_id](#output\_nat\_id) | NAT Gateway ID |
 | <a name="output_nat_instance_ip"></a> [nat\_instance\_ip](#output\_nat\_instance\_ip) | n/a |
 | <a name="output_nat_instance_sg_id"></a> [nat\_instance\_sg\_id](#output\_nat\_instance\_sg\_id) | n/a |
+| <a name="output_nat_instance_ssh_key_prv"></a> [nat\_instance\_ssh\_key\_prv](#output\_nat\_instance\_ssh\_key\_prv) | Private SSH keys for NAT instances |
+| <a name="output_nat_instance_ssh_key_pub"></a> [nat\_instance\_ssh\_key\_pub](#output\_nat\_instance\_ssh\_key\_pub) | Public SSH keys for NAT instances |
 | <a name="output_private_rt"></a> [private\_rt](#output\_private\_rt) | Private route tables info |
 | <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Raw information about private subnets |
 | <a name="output_private_subnets_cidr_blocks"></a> [private\_subnets\_cidr\_blocks](#output\_private\_subnets\_cidr\_blocks) | List of private subnets cidr\_blocks |
