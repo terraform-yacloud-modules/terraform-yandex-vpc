@@ -1,3 +1,7 @@
+## v3.7.0 - 2026-06-01
+### Features
+- 1704d76 feat: add nat_instance_ssh_key_pub/nat_instance_ssh_key_prv
+
 ## v3.6.0 - 2026-03-18
 ### Chores
 - 19ffbfb chore(deps): bump nat_instance::terraform-yandex-instance ([#114](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/114))
