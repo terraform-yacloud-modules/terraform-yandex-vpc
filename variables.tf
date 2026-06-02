@@ -230,7 +230,8 @@ variable "nat_instance_vm" {
     allow_stopping_for_update = bool
     generate_ssh_key          = bool
     ssh_user                  = string
-    ssh_pubkey                = string
+    ssh_pubkey_data           = optional(string)
+    ssh_pubkey_path           = optional(string)
     enable_oslogin            = bool
   })
   default = {
@@ -243,7 +244,8 @@ variable "nat_instance_vm" {
     allow_stopping_for_update = false
     generate_ssh_key          = false
     ssh_user                  = "ubuntu"
-    ssh_pubkey                = null
+    ssh_pubkey_data           = null
+    ssh_pubkey_path           = null
     enable_oslogin            = true
   }
 }
