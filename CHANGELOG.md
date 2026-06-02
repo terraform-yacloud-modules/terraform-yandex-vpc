@@ -1,3 +1,7 @@
+## v3.8.0 - 2026-06-02
+### Features
+- 9fdc107 feat: use single ssh key for all nat instances
+
 ## v3.7.0 - 2026-06-01
 ### Features
 - 1704d76 feat: add nat_instance_ssh_key_pub/nat_instance_ssh_key_prv
