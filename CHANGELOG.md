@@ -1,3 +1,7 @@
+## v3.10.0 - 2026-06-02
+### Features
+- 266c128 feat: update module
+
 ## v3.9.0 - 2026-06-02
 ### Bug Fixes
 - 145e7b4 fix: readme
