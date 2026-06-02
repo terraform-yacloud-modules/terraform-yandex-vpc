@@ -31,13 +31,13 @@ output "nat_instance_ip" {
 output "nat_instance_ssh_key_pub" {
   description = "Public SSH keys for NAT instances"
   sensitive   = true
-  value       = var.create_nat_instance ? (length(module.nat_instance) > 0 ? module.nat_instance[0].ssh_key_pub : null) : null
+  value       = var.create_nat_instance && var.nat_instance_vm["generate_ssh_key"] ? tls_private_key.nat_instance[0].public_key_openssh : null
 }
 
 output "nat_instance_ssh_key_prv" {
   description = "Private SSH keys for NAT instances"
   sensitive   = true
-  value       = var.create_nat_instance ? (length(module.nat_instance) > 0 ? module.nat_instance[0].ssh_key_prv : null) : null
+  value       = var.create_nat_instance && var.nat_instance_vm["generate_ssh_key"] ? tls_private_key.nat_instance[0].private_key_pem : null
 }
 
 #

@@ -65,10 +65,16 @@ resource "yandex_vpc_address" "nat_instance" {
   }
 }
 
+resource "tls_private_key" "nat_instance" {
+  count = var.nat_instance_vm["generate_ssh_key"] ? 1 : 0
+
+  algorithm = "RSA"
+}
+
 module "nat_instance" {
   count = local.len_nat_instances
 
-  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v2.20.0"
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v2.22.0"
 
   folder_id = var.folder_id
 
@@ -94,9 +100,9 @@ module "nat_instance" {
 
   hostname                  = format("%s-%s", local.nat_blank_name, yandex_vpc_subnet.public[count.index]["zone"])
   allow_stopping_for_update = var.nat_instance_vm["allow_stopping_for_update"]
-  generate_ssh_key          = var.nat_instance_vm["generate_ssh_key"]
+  generate_ssh_key          = false
   ssh_user                  = var.nat_instance_vm["ssh_user"]
-  ssh_pubkey                = var.nat_instance_vm["ssh_pubkey"]
+  ssh_pubkey                = var.nat_instance_vm["generate_ssh_key"] ? tls_private_key.nat_instance[0].public_key_openssh : null
   enable_oslogin            = var.nat_instance_vm["enable_oslogin"]
 
   public_ip_address = yandex_vpc_address.nat_instance[count.index].external_ipv4_address[0].address
