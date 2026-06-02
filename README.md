@@ -42,18 +42,20 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Version |
 |------|---------|
+| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
 | <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.72.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.20.0 |
+| <a name="module_nat_instance"></a> [nat\_instance](#module\_nat\_instance) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git | v2.22.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [tls_private_key.nat_instance](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [yandex_compute_image.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_image) | resource |
 | [yandex_vpc_address.nat_instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_address) | resource |
 | [yandex_vpc_gateway.nat](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_gateway) | resource |
