@@ -102,7 +102,7 @@ module "nat_instance" {
   allow_stopping_for_update = var.nat_instance_vm["allow_stopping_for_update"]
   generate_ssh_key          = false
   ssh_user                  = var.nat_instance_vm["ssh_user"]
-  ssh_pubkey                = var.nat_instance_vm["generate_ssh_key"] ? tls_private_key.nat_instance[0].public_key_openssh : null
+  ssh_pubkey_data           = var.nat_instance_vm["generate_ssh_key"] ? tls_private_key.nat_instance[0].public_key_openssh : null
   enable_oslogin            = var.nat_instance_vm["enable_oslogin"]
 
   public_ip_address = yandex_vpc_address.nat_instance[count.index].external_ipv4_address[0].address
