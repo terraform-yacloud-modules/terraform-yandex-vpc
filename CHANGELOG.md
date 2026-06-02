@@ -1,3 +1,7 @@
+## v3.12.0 - 2026-06-02
+### Bug Fixes
+- 7450947 fix: nat_instance_vm
+
 ## v3.11.0 - 2026-06-02
 ### Bug Fixes
 - 09c9405 fix: ssh_pubkey
