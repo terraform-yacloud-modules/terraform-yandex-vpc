@@ -74,7 +74,7 @@ resource "tls_private_key" "nat_instance" {
 module "nat_instance" {
   count = local.len_nat_instances
 
-  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v2.22.0"
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-instance.git?ref=v2.23.0"
 
   folder_id = var.folder_id
 
