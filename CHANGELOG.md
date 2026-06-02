@@ -1,3 +1,7 @@
+## v3.9.0 - 2026-06-02
+### Bug Fixes
+- 145e7b4 fix: readme
+
 ## v3.8.0 - 2026-06-02
 ### Features
 - 9fdc107 feat: use single ssh key for all nat instances
