@@ -1,9 +1,12 @@
 data "yandex_client_config" "client" {}
 
+provider "yandex" {
+}
+
 module "network" {
   source = "../../"
 
-  folder_id = data.yandex_client_config.client.folder_id
+  folder_id = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
 
   blank_name = "vpc-simple"
   labels = {
