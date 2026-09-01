@@ -1,3 +1,7 @@
+## v3.13.0 - 2026-09-01
+### Chores
+- 78cf8c1 chore(deps): bump actions/cache from 5.0.3 to 5.0.5 ([#116](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/116))
+
 ## v3.12.0 - 2026-06-02
 ### Bug Fixes
 - 7450947 fix: nat_instance_vm
