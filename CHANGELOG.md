@@ -1,3 +1,7 @@
+## v3.16.0 - 2026-11-07
+### Chores
+- 6e3fa3d chore(deps): bump nat_instance::terraform-yandex-instance ([#120](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/120))
+
 ## v3.15.0 - 2026-11-07
 ### Chores
 - 9dec755 chore(deps): bump actions/checkout from 6 to 7 ([#119](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/119))
