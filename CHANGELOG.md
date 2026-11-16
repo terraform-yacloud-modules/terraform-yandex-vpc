@@ -1,3 +1,7 @@
+## v3.17.0 - 2026-11-16
+### Bug Fixes
+- 05d8e2d fix(examples): use available zones and wire NAT routes ([#121](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/121))
+
 ## v3.16.0 - 2026-11-07
 ### Chores
 - 6e3fa3d chore(deps): bump nat_instance::terraform-yandex-instance ([#120](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/120))
