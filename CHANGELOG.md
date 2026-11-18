@@ -1,3 +1,7 @@
+## v3.18.0 - 2026-11-18
+### Miscellaneous
+- 8d72692 ci: run semver job only on push to main ([#123](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/123))
+
 ## v3.17.0 - 2026-11-16
 ### Bug Fixes
 - 05d8e2d fix(examples): use available zones and wire NAT routes ([#121](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/121))
