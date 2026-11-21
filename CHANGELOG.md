@@ -1,3 +1,7 @@
+## v3.19.0 - 2026-11-21
+### Chores
+- 3d8914c chore(deps): bump nat_instance::terraform-yandex-instance ([#122](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/122))
+
 ## v3.18.0 - 2026-11-18
 ### Miscellaneous
 - 8d72692 ci: run semver job only on push to main ([#123](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/123))
