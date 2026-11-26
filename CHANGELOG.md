@@ -1,3 +1,10 @@
+## v3.20.0 - 2026-11-26
+### Chores
+- 1d70375 chore(deps): bump nat_instance::terraform-yandex-instance
+
+### Miscellaneous
+- 18c6f86 Merge pull request [#124](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/124) from terraform-yacloud-modules/dependabot/terraform/nat_instance--github--terraform-yacloud-modules/terraform-yandex-instance--v3.6.0-3.8.0
+
 ## v3.19.0 - 2026-11-21
 ### Chores
 - 3d8914c chore(deps): bump nat_instance::terraform-yandex-instance ([#122](https://github.com/terraform-yacloud-modules/terraform-yandex-vpc/pull/122))
